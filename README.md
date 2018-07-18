@@ -15,3 +15,14 @@ Starting as a personal repo to automate vfio configurations. Will add puppet and
 <h3> /etc/sysconfig/grub</h3>
 
     grub2-mkconfig -o /etc/grub2-efi.cfg
+
+<h2> updating the vm file to avoid nvidia error 43</h2>
+For this step we again need to run virsh edit on the VM.
+virsh edit win10
+Within the <features> section, remove everything between the <hyperv> tags, including the tags themselves.  In their place add the following tags:
+
+    <kvm>
+      <hidden state='on'/>
+    </kvm>
+
+Additionally, within the <clock> tag, find the timer named hypervclock, remove the line containing this tag completely.  Save and exit the edit session.
